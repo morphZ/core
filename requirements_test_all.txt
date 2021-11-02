@@ -1338,6 +1338,9 @@ toonapi==0.2.1
 # homeassistant.components.totalconnect
 total_connect_client==2021.8.3
 
+# homeassistant.components.pvcharge
+transitions==0.8.10
+
 # homeassistant.components.transmission
 transmissionrpc==0.11
 

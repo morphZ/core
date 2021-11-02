@@ -1,0 +1,15 @@
+{
+  "domain": "pvcharge",
+  "name": "pvcharge",
+  "config_flow": true,
+  "documentation": "https://www.home-assistant.io/integrations/pvcharge",
+  "requirements": ["transitions==0.8.10"],
+  "ssdp": [],
+  "zeroconf": [],
+  "homekit": {},
+  "dependencies": [],
+  "codeowners": [
+    "@morphZ"
+  ],
+  "iot_class": "calculated"
+}
