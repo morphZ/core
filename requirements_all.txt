@@ -2139,6 +2139,9 @@ sharp_aquos_rc==0.3.2
 # homeassistant.components.shodan
 shodan==1.25.0
 
+# homeassistant.components.pvcharge
+simple-pid==1.0.1
+
 # homeassistant.components.sighthound
 simplehound==0.3
 

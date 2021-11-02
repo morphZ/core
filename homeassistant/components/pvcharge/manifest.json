@@ -3,11 +3,11 @@
   "name": "pvcharge",
   "config_flow": true,
   "documentation": "https://www.home-assistant.io/integrations/pvcharge",
-  "requirements": ["transitions==0.8.10"],
+  "requirements": ["transitions==0.8.10", "simple-pid==1.0.1"],
   "ssdp": [],
   "zeroconf": [],
   "homekit": {},
-  "dependencies": [],
+  "dependencies": ["input_number"],
   "codeowners": [
     "@morphZ"
   ],

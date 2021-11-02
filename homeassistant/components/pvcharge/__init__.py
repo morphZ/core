@@ -25,8 +25,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     def make_data():
         return {
-            "sun": hass.states.get("sun.sun").state,
-            "updater": hass.states.get("binary_sensor.updater").state,
+            "excess": hass.states.get("input_number.grid_return").state,
         }
 
     pvc = PVCharger()
@@ -36,6 +35,12 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         """Update controller state and parameters."""
         _LOGGER.debug("Run pvc.touch()")
         pvc.touch(make_data())
+
+        await hass.services.async_call(
+            "input_number",
+            "set_value",
+            {"entity_id": "input_number.charge_power", "value": pvc.output},
+        )
 
     pvc.timer = async_track_time_interval(  # type: ignore
         hass,
