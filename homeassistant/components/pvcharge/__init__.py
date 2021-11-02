@@ -1,19 +1,16 @@
 """The pvcharge integration."""
 from __future__ import annotations
 
-from datetime import timedelta
 import logging
 
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant
-from homeassistant.helpers.event import async_track_time_interval
+from homeassistant.core import HomeAssistant, callback
+from homeassistant.helpers.event import async_call_later
 
 from .const import DOMAIN
 from .pvcharge import PVCharger
 
 _LOGGER = logging.getLogger(__name__)
-
-REFRESH_INTERVAL = timedelta(seconds=5)
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
@@ -23,32 +20,16 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     hass.data.setdefault(DOMAIN, {})
 
-    def make_data():
-        return {
-            "excess": hass.states.get("input_number.grid_return").state,
-        }
-
-    pvc = PVCharger()
-    pvc.start(make_data())  # type: ignore
-
-    async def async_refresh(event_time):
-        """Update controller state and parameters."""
-        _LOGGER.debug("Run pvc.touch()")
-        pvc.touch(make_data())
-
-        await hass.services.async_call(
-            "input_number",
-            "set_value",
-            {"entity_id": "input_number.charge_power", "value": pvc.output},
-        )
-
-    pvc.timer = async_track_time_interval(  # type: ignore
-        hass,
-        async_refresh,
-        REFRESH_INTERVAL,
-    )
+    pvc = PVCharger(hass)
+    pvc.start()  # type: ignore
 
     hass.data[DOMAIN][entry.entry_id] = pvc
+
+    @callback
+    async def async_halt(event_time) -> None:
+        pvc.to_idle()  # type: ignore
+
+    async_call_later(hass, 15, async_halt)
 
     return True
 
