@@ -6,12 +6,12 @@ import logging
 from typing import Callable
 
 from simple_pid import PID
-from transitions import Machine
+from transitions.extensions.asyncio import AsyncMachine
 
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.event import async_track_time_interval
 
-_LOGGER = logging.getLogger()
+_LOGGER = logging.getLogger(__name__)
 
 REFRESH_INTERVAL = timedelta(seconds=5)
 
@@ -34,21 +34,21 @@ class PVCharger:
 
         self.hass: HomeAssistant = hass
 
-        self.machine: Machine = Machine(
+        self.machine = AsyncMachine(
             model=self,
             states=PVCharger.states,
             transitions=PVCharger.transitions,
             initial="off",
         )
 
-        self.pid: PID = PID(
+        self.pid = PID(
             -1.0, -0.1, 0.0, setpoint=0.0, sample_time=1, output_limits=(2.0, 11.0)
         )
         self.control: float | None = 0.0
         self.pid_handle: Callable | None = None
         self.pid_interval: timedelta = REFRESH_INTERVAL
 
-    def on_enter_pv(self) -> None:
+    async def on_enter_pv(self) -> None:
         """Start control loop for pv controlled charging."""
 
         @callback
@@ -64,7 +64,7 @@ class PVCharger:
             self.pid_interval,
         )
 
-    def on_exit_pv(self) -> None:
+    async def on_exit_pv(self) -> None:
         """Stop pid loop."""
 
         if self.pid_handle is not None:
