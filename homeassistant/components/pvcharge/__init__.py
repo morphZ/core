@@ -21,7 +21,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     hass.data.setdefault(DOMAIN, {})
 
     pvc = PVCharger(hass)
-    await pvc.start()  # type: ignore
+    await pvc.to_idle()  # type: ignore
 
     hass.data[DOMAIN][entry.entry_id] = pvc
 
@@ -37,5 +37,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     _LOGGER.warning("Enter async_unload_entry")
+
+    pvc = hass.data[DOMAIN].pop(entry.entry_id)
+    pvc.close()
 
     return True
