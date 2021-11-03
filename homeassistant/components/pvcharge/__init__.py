@@ -4,8 +4,7 @@ from __future__ import annotations
 import logging
 
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant, callback
-from homeassistant.helpers.event import async_call_later
+from homeassistant.core import HomeAssistant
 
 from .const import DOMAIN
 from .pvcharger import PVCharger
@@ -21,15 +20,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     hass.data.setdefault(DOMAIN, {})
 
     pvc = PVCharger(hass)
-    await pvc.to_idle()  # type: ignore
+    await pvc.go()
 
     hass.data[DOMAIN][entry.entry_id] = pvc
-
-    @callback
-    async def async_halt(event_time) -> None:
-        await pvc.to_idle()  # type: ignore
-
-    async_call_later(hass, 15, async_halt)
 
     return True
 
