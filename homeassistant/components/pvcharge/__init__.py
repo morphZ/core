@@ -1,6 +1,7 @@
 """The pvcharge integration."""
 from __future__ import annotations
 
+from datetime import timedelta
 import logging
 
 from homeassistant.config_entries import ConfigEntry
@@ -8,6 +9,9 @@ from homeassistant.core import HomeAssistant
 
 from .const import DOMAIN
 from .pvcharger import PVCharger
+
+# from homeassistant.helpers.event import async_call_later
+
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -20,7 +24,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     hass.data.setdefault(DOMAIN, {})
 
     pvc = PVCharger(hass)
-    await pvc.go()
+    await pvc.boost(timedelta(seconds=3))  # type: ignore
 
     hass.data[DOMAIN][entry.entry_id] = pvc
 
