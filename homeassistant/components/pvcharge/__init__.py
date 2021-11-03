@@ -36,6 +36,6 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     _LOGGER.warning("Enter async_unload_entry")
 
     pvc = hass.data[DOMAIN].pop(entry.entry_id)
-    pvc.close()
+    await pvc.halt()
 
     return True
