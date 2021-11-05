@@ -3,9 +3,15 @@
     "step": {
       "user": {
         "data": {
-          "host": "[%key:common::config_flow::data::host%]",
-          "username": "[%key:common::config_flow::data::username%]",
-          "password": "[%key:common::config_flow::data::password%]"
+          "grid_entity": "[%key:common::config_flow::data::grid_entity%]",
+          "charge_entity": "[%key:common::config_flow::data::charge_entity%]",
+          "charge_min": "[%key:common::config_flow::data::charge_min%]",
+          "charge_max": "[%key:common::config_flow::data::charge_max%]",
+          "charge_threshold": "[%key:common::config_flow::data::charge_threshold%]",
+          "charge_hysteresis": "[%key:common::config_flow::data::charge_hysteresis%]",
+          "boost_time": "[%key:common::config_flow::data::boost_time%]",
+          "soc_entity": "[%key:common::config_flow::data::soc_entity%]",
+          "soc_min": "[%key:common::config_flow::data::soc_min%]"
         }
       }
     },
