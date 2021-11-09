@@ -31,7 +31,6 @@ DEFAULT_DURATION = 30
 PVCHARGE_SCHEMA = vol.Schema(
     {
         vol.Required(CONF_BALANCE_TEMPLATE): cv.template,
-        # vol.Required(CONF_CHARGE_ENTITY): cv.entity_id,
         vol.Optional(CONF_SWITCH): cv.entity_id,
         vol.Required(CONF_MIN): vol.Coerce(float),
         vol.Required(CONF_MAX): vol.Coerce(float),
@@ -46,17 +45,12 @@ PVCHARGE_SCHEMA = vol.Schema(
 
 CONFIG_SCHEMA = vol.Schema({DOMAIN: PVCHARGE_SCHEMA}, extra=vol.ALLOW_EXTRA)
 
-# CONFIG_SCHEMA = vol.Schema(
-#     {DOMAIN: cv.schema_with_slug_keys(PVCHARGE_SCHEMA)}, extra=vol.ALLOW_EXTRA
-# )
-
 
 async def async_setup(hass: HomeAssistant, config: dict) -> bool:
     """Set up pvcharge from a config entry."""
     # pylint: disable=no-member
     _LOGGER.warning("Enter async_setup")
 
-    # hass.data.setdefault(DOMAIN, {})
     params = [config[DOMAIN].get(k, None) for k in PVCHARGE_SCHEMA.schema.keys()]
 
     pvc = PVCharger(hass, *params)
