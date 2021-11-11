@@ -1,7 +1,8 @@
 {
   "domain": "pvcharge",
   "name": "pvcharge",
-  "config_flow": true,
+  "config_flow": false,
+  "version": "0.1",
   "documentation": "https://www.home-assistant.io/integrations/pvcharge",
   "requirements": ["transitions==0.8.10", "simple-pid==1.0.1"],
   "ssdp": [],
