@@ -15,6 +15,7 @@ _LOGGER = logging.getLogger(__name__)
 
 CONF_BALANCE_ENTITY = "balance_entity"
 CONF_BALANCE_SETPOINT = "balance_setpoint"
+CONF_BALANCE_MA = "balance_ma_length"
 CONF_THRESHOLD = "balance_threshold"
 CONF_HYSTERESIS = "balance_hysteresis"
 CONF_SWITCH = "charge_switch"
@@ -26,6 +27,7 @@ CONF_LOW_VALUE = "soc_low_value"
 CONF_REFRESH = "refresh_interval"
 
 DEFAULT_SETPOINT = 0.0
+DEFAULT_MA_LENGTH = 1
 DEFAULT_DURATION = 30
 
 PVCHARGE_SCHEMA = vol.Schema(
@@ -34,6 +36,7 @@ PVCHARGE_SCHEMA = vol.Schema(
         vol.Optional(CONF_BALANCE_SETPOINT, default=DEFAULT_SETPOINT): vol.Coerce(
             float
         ),
+        vol.Optional(CONF_BALANCE_MA, default=DEFAULT_MA_LENGTH): vol.Coerce(int),
         vol.Optional(CONF_SWITCH): cv.entity_id,
         vol.Required(CONF_MIN): vol.Coerce(float),
         vol.Required(CONF_MAX): vol.Coerce(float),
