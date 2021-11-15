@@ -13,14 +13,7 @@ from .pvcharger import PVCharger
 
 _LOGGER = logging.getLogger(__name__)
 
-CONF_BALANCE_ENTITY = "balance_entity"
-CONF_BALANCE_SETPOINT = "balance_setpoint"
-CONF_BALANCE_MA = "balance_ma_length"
-CONF_THRESHOLD = "balance_threshold"
-CONF_HYSTERESIS = "balance_hysteresis"
-CONF_SWITCH = "charge_switch"
-CONF_MIN = "charge_min"
-CONF_MAX = "charge_max"
+CONF_CHARGER_HOST = "charger_host"
 CONF_DURATION = "boost_duration"
 CONF_SOC_ENTITY = "soc_entity"
 CONF_LOW_VALUE = "soc_low_value"
@@ -32,16 +25,7 @@ DEFAULT_DURATION = 30
 
 PVCHARGE_SCHEMA = vol.Schema(
     {
-        vol.Required(CONF_BALANCE_ENTITY): cv.entity_id,
-        vol.Optional(CONF_BALANCE_SETPOINT, default=DEFAULT_SETPOINT): vol.Coerce(
-            float
-        ),
-        vol.Optional(CONF_BALANCE_MA, default=DEFAULT_MA_LENGTH): vol.Coerce(int),
-        vol.Optional(CONF_SWITCH): cv.entity_id,
-        vol.Required(CONF_MIN): vol.Coerce(float),
-        vol.Required(CONF_MAX): vol.Coerce(float),
-        vol.Optional(CONF_THRESHOLD): vol.Coerce(float),
-        vol.Optional(CONF_HYSTERESIS): vol.Coerce(float),
+        vol.Required(CONF_CHARGER_HOST): cv.string,
         vol.Required(CONF_DURATION, default=DEFAULT_DURATION): vol.Coerce(int),
         vol.Optional(CONF_SOC_ENTITY): cv.entity_id,
         vol.Optional(CONF_LOW_VALUE): vol.Coerce(float),
