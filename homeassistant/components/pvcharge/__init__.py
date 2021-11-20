@@ -44,6 +44,6 @@ async def async_setup(hass: HomeAssistant, config: dict) -> bool:
     params = [config[DOMAIN].get(k, None) for k in PVCHARGE_SCHEMA.schema.keys()]
 
     pvc = PVCharger(hass, *params)
-    await pvc.auto()  # type: ignore
+    await pvc.run()  # type: ignore
 
     return True
