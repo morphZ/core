@@ -15,6 +15,7 @@ _LOGGER = logging.getLogger(__name__)
 
 CONF_CHARGER_HOST = "charger_host"
 CONF_DURATION = "boost_duration"
+CONF_BALANCE_ENTITY = "balance_entity"
 CONF_SOC_ENTITY = "soc_entity"
 CONF_LOW_VALUE = "soc_low_value"
 CONF_REFRESH = "refresh_interval"
@@ -27,6 +28,7 @@ PVCHARGE_SCHEMA = vol.Schema(
     {
         vol.Required(CONF_CHARGER_HOST): cv.string,
         vol.Required(CONF_DURATION, default=DEFAULT_DURATION): vol.Coerce(int),
+        vol.Required(CONF_BALANCE_ENTITY): cv.entity_id,
         vol.Optional(CONF_SOC_ENTITY): cv.entity_id,
         vol.Optional(CONF_LOW_VALUE): vol.Coerce(float),
         vol.Optional(CONF_REFRESH): vol.Coerce(int),
