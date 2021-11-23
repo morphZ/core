@@ -18,7 +18,8 @@ CONF_DURATION = "boost_duration"
 CONF_BALANCE_ENTITY = "balance_entity"
 CONF_SOC_ENTITY = "soc_entity"
 CONF_LOW_VALUE = "soc_low_value"
-CONF_REFRESH = "refresh_interval"
+CONF_REFRESH = "pid_interval"
+CONF_PV_REFRESH = "pv_interval"
 
 DEFAULT_SETPOINT = 0.0
 DEFAULT_MA_LENGTH = 1
@@ -32,6 +33,7 @@ PVCHARGE_SCHEMA = vol.Schema(
         vol.Optional(CONF_SOC_ENTITY): cv.entity_id,
         vol.Optional(CONF_LOW_VALUE): vol.Coerce(float),
         vol.Optional(CONF_REFRESH): vol.Coerce(int),
+        vol.Optional(CONF_PV_REFRESH): vol.Coerce(int),
     }
 )
 
