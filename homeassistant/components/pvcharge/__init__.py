@@ -20,10 +20,13 @@ CONF_SOC_ENTITY = "soc_entity"
 CONF_LOW_VALUE = "soc_low_value"
 CONF_REFRESH = "pid_interval"
 CONF_PV_REFRESH = "pv_interval"
+CONF_UPDATE_SERVICE = "update_service"
+CONF_UPDATE_INTERVAL = "update_interval"
 
 DEFAULT_SETPOINT = 0.0
 DEFAULT_MA_LENGTH = 1
 DEFAULT_DURATION = 30
+DEFAULT_UPDATE_INTERVAL = 600
 
 PVCHARGE_SCHEMA = vol.Schema(
     {
@@ -34,6 +37,10 @@ PVCHARGE_SCHEMA = vol.Schema(
         vol.Optional(CONF_LOW_VALUE): vol.Coerce(float),
         vol.Optional(CONF_REFRESH): vol.Coerce(int),
         vol.Optional(CONF_PV_REFRESH): vol.Coerce(int),
+        vol.Optional(CONF_UPDATE_SERVICE): cv.service,
+        vol.Required(CONF_UPDATE_INTERVAL, default=DEFAULT_UPDATE_INTERVAL): vol.Coerce(
+            int
+        ),
     }
 )
 
